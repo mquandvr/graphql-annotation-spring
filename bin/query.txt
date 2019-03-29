@@ -1,0 +1,43 @@
+query HeroComparison($id: ID!){
+  author1: findAllAuthors {
+    ...author
+  }
+  author2: findAllAuthors {
+    ...author
+  }
+}
+fragment author on Author {
+  id
+  firstName
+  lastName
+  bookById(id: $id) {
+    ...book
+  }
+}
+fragment book on Book {
+  id
+  title
+  isbn
+  pageCount
+}
+
+{
+  "id": 3
+}
+
+
+mutation {
+  newBook(title: "React", isbn: "7", pageCount: 2, author: "1") {
+    title
+    isbn
+    pageCount
+  }
+}
+
+mutation {
+  updateBookPageCount(id: 1, pageCount: 10) {
+    title
+    isbn
+    pageCount
+  }
+}
