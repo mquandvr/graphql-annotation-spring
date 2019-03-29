@@ -7,3 +7,4 @@ https://www.graphql-java.com/documentation/v11/sdl-directives/
 https://www.slideshare.net/Codemotion/developing-and-maintaining-a-java-graphql-backend-the-less-obvious-bojan-tomic-codemotion-amsterdam-2017
 
 https://github.com/leangen/graphql-spqr-samples
+test  commit
