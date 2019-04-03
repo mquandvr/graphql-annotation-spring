@@ -3,9 +3,8 @@ package com.mqdvr.graphql.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.springframework.security.access.prepost.PreAuthorize;
-
 import io.leangen.graphql.annotations.GraphQLQuery;
+import io.leangen.graphql.annotations.types.GraphQLInterface;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,13 +14,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class FoodDto implements Serializable {
+public class Food implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @GraphQLQuery(name = "foodId", description = "food id")
     private Long id;
-
+    
     @GraphQLQuery(name = "foodName", description = "food name")
     private String foodName;
 

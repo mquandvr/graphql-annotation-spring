@@ -1,10 +1,10 @@
 package com.mqdvr.graphql.service;
 
-import com.mqdvr.graphql.dto.FoodDto;
-import com.mqdvr.graphql.dto.StoreDto;
+import com.mqdvr.graphql.dto.Food;
+import com.mqdvr.graphql.dto.Store;
 import com.mqdvr.graphql.service.base.BaseService;
 
-public interface StoreService extends BaseService<StoreDto, Long> {
+public interface StoreService extends BaseService<Store, Long> {
 
-	FoodDto findByFoodId(StoreDto store, Long foodId);
+	Food findByFoodId(Store store, Long foodId);
 }

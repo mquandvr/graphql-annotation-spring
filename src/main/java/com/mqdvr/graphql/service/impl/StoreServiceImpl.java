@@ -5,12 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import com.mqdvr.graphql.dto.FoodDto;
-import com.mqdvr.graphql.dto.StoreDto;
+import com.mqdvr.graphql.dto.Food;
+import com.mqdvr.graphql.dto.Store;
 import com.mqdvr.graphql.entity.FoodEntity;
 import com.mqdvr.graphql.entity.StoreEntity;
 import com.mqdvr.graphql.repository.FoodRepository;
@@ -21,7 +19,6 @@ import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLContext;
 import io.leangen.graphql.annotations.GraphQLNonNull;
 import io.leangen.graphql.annotations.GraphQLQuery;
-import io.leangen.graphql.annotations.GraphQLRootContext;
 
 @Service
 public class StoreServiceImpl implements StoreService {
@@ -34,12 +31,12 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     @GraphQLQuery(name = "findAllStore")
-    public List<StoreDto> findAll() {
+    public List<Store> findAll() {
         Iterable<StoreEntity> stores = storeRepository.findAll();
-        List<StoreDto> storeDtos = new ArrayList<StoreDto>();
+        List<Store> storeDtos = new ArrayList<Store>();
 
         stores.forEach(entity -> {
-            StoreDto dto = converStoreEntityToDto(entity);
+            Store dto = converStoreEntityToDto(entity);
             storeDtos.add(dto);
         });
 
@@ -47,41 +44,41 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GraphQLQuery(name = "findByFoodId")
-    public FoodDto findByFoodId(@GraphQLContext StoreDto store,
+    public Food findByFoodId(@GraphQLContext Store store,
             @GraphQLArgument(name = "foodId") @GraphQLNonNull Long foodId) {
         FoodEntity entity = foodRepository.findByFoodIdAndStoreId(foodId, store.getId());
-        FoodDto dto = converFoodEntityToDto(entity);
+        Food dto = converFoodEntityToDto(entity);
         return dto;
     }
 
     @Override
-    public StoreDto findById(long id) {
+    public Store findById(long id) {
         Optional<StoreEntity> entity = storeRepository.findById(id);
 
         return converStoreEntityToDto(entity.orElse(null));
     }
 
     @Override
-    public Long updateById(StoreDto t, long id) {
+    public Long updateById(Store t, long id) {
         // TODO Auto-generated method stub
         return null;
     }
 
 
-    private StoreDto converStoreEntityToDto(StoreEntity entity) {
+    private Store converStoreEntityToDto(StoreEntity entity) {
         if (entity == null) {
             return null;
         }
 
-        StoreDto dto = new StoreDto();
+        Store dto = new Store();
         dto.setId(entity.getId());
         dto.setStoreName(entity.getStoreName());
 
-        List<FoodDto> foods =new ArrayList<FoodDto>();
+        List<Food> foods =new ArrayList<Food>();
         entity.getListFood().forEach(food -> {
-            FoodDto foodDto = converFoodEntityToDto(food);
+            Food foodDto = converFoodEntityToDto(food);
             foods.add(foodDto);
         });
         dto.setListFood(foods);
@@ -90,12 +87,12 @@ public class StoreServiceImpl implements StoreService {
     }
 
 
-    private FoodDto converFoodEntityToDto(FoodEntity entity) {
+    private Food converFoodEntityToDto(FoodEntity entity) {
         if (entity == null) {
             return null;
         }
 
-        FoodDto dto = new FoodDto();
+        Food dto = new Food();
         dto.setId(entity.getId());
         dto.setFoodName(entity.getFoodName());
         dto.setType(entity.getType());

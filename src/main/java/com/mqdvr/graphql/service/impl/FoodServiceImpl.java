@@ -8,11 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.stereotype.Service;
 
-import com.mqdvr.graphql.dto.FoodDto;
+import com.mqdvr.graphql.dto.Food;
 import com.mqdvr.graphql.entity.FoodEntity;
 import com.mqdvr.graphql.repository.FoodRepository;
 import com.mqdvr.graphql.service.FoodService;
 
+import graphql.execution.batched.Batched;
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLNonNull;
 import io.leangen.graphql.annotations.GraphQLQuery;
@@ -26,12 +27,12 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     @GraphQLQuery(name = "findAllFood")
-    public List<FoodDto> findAll() {
+    public List<Food> findAll() {
         Iterable<FoodEntity> foodLst = foodRepository.findAll();
-        List<FoodDto> foodDto = new ArrayList<FoodDto>();
+        List<Food> foodDto = new ArrayList<Food>();
 
         foodLst.forEach(entity -> {
-            FoodDto dto = converEntityToDto(entity);
+            Food dto = converEntityToDto(entity);
 
             foodDto.add(dto);
         });
@@ -41,24 +42,24 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     @GraphQLQuery(name = "findFoodById")
-    public FoodDto findById(@GraphQLArgument(name = "id") @GraphQLNonNull long foodId) {
+    public Food findById(@GraphQLArgument(name = "id", description = "food id") @GraphQLNonNull long foodId) {
         Optional<FoodEntity> entity = foodRepository.findById(foodId);
 
         return converEntityToDto(entity.orElse(null));
     }
 
     @Override
-    public Long updateById(FoodDto t, long id) {
+    public Long updateById(Food t, long id) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    private FoodDto converEntityToDto(FoodEntity entity) {
+    private Food converEntityToDto(FoodEntity entity) {
         if (entity == null) {
             return null;
         }
 
-        FoodDto dto = new FoodDto();
+        Food dto = new Food();
         dto.setId(entity.getId());
         dto.setFoodName(entity.getFoodName());
         dto.setType(entity.getType());
