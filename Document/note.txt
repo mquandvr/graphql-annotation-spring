@@ -1,0 +1,9 @@
+nhuoc diem:
+	chi tra ve http status code: 200
+	khong co http caching ( dung them phan mem 3rd)
+	phuc tap (If you have a simple REST API and deal with data that is relatively consistent over time, you would be better off sticking with your REST API)
+	There is nothing about file upload in the GraphQL specification and mutations doesn’t accept files in the arguments
+	
+https://www.altexsoft.com/blog/engineering/graphql-core-features-architecture-pros-and-cons/
+https://scotch.io/tutorials/graphql-the-good-and-the-bad
+https://stackoverflow.com/questions/40689858/are-there-any-disadvantages-to-graphql
