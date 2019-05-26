@@ -22,3 +22,13 @@ spring:
       password: 123
       roles:
       - ADMIN
+    oauth2:
+      resource:
+        jwt:
+          keyValue: |
+            -----BEGIN PUBLIC KEY-----
+            MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+            -----END PUBLIC KEY-----
+
+jwt:
+  secret: MyScret
